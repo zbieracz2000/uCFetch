@@ -38,11 +38,11 @@ int main()
 
 	struct utsname uName;
 	uname(&uName);
-
+/*
 	FILE* pak;
 	char pk[7];
 	pak = popen("xbps-query -l | wc -l", "r");
-
+*/
 	char *str = getenv("SHELL");
 	char *shell;
 	shell = basename(str);
@@ -54,11 +54,11 @@ int main()
 	double used_mb = (si.totalram / mb) - (si.freeram / mb) - (si.bufferram / mb) - (si.sharedram / mb) - (si.sharedram / mb);
 
 	// Prints user@host
-	printf("       .---.	 %s@%s \n", user, hostname);
+	printf("\033[1;33m       .---.	 \033[0;32m%s@%s \n", user, hostname);
 
 	// Prints name of the distro
 	int fw = 0;
-	printf("      /     \\	 OS: \t\t");
+	printf("\033[1;33m      /     \\	 \033[0;34mOS: \t\t");
 	while( (ch=fgetc(p)) != EOF)
 	{
 		if(isalpha(ch))
@@ -78,31 +78,23 @@ int main()
 	pclose(p);
 	printf("\n");
 
-	printf("      \\.@-@./	 HOST: \t\t");
+	printf("\033[1;33m      \\.@-@./	 \033[0;35mHOST: \t\t");
 	while(fgets(modelname, sizeof(modelname), model))
 	{
 		printf("%s", modelname);
 	}
 
 	// Prints linux & version
-	printf("      /`\\_/`\\	 KERNEL: \t%s %s\n", uName.sysname, uName.release);
+	printf("\033[1;33m      /`\\_/`\\	 \033[0;36mKERNEL: \t%s %s\n", uName.sysname, uName.release);
 
 	// Prints uptime
-	printf("     //  _  \\\\	 UPTIME: \t%ld hours, %02ld minutes\n", (si.uptime % day) / 3600, (si.uptime % hour) / minute);
+	printf("\033[1;33m     //  _  \\\\	 \033[0;35mUPTIME: \t%ld hours, %02ld minutes\n", (si.uptime % day) / 3600, (si.uptime % hour) / minute);
 
-	// Prints number of packages
-	printf("    | \\     )|	 PACKAGES: \t");
-	while(fgets(pk, sizeof(pk), pak))
-	{
-		printf("%s", pk);
-	}
-	pclose(pak);
-
-	// Prints shell name
-	printf("   /`\\_`>  <_/ \\ SHELL: \t%s\n", shell);
+	// Prints shell
+	printf("\033[1;33m    | \\     )|	 \033[0;34mSHELL: \t%s\n", shell);
 
 	// Prints the desktop environment
-	printf("   /`\\_`>  <_/ \\ DE:\t\t%s\n", de);
+	printf("\033[1;33m   /`\\_`>  <_/ \\ \033[0;33mDE:\t\t%s\n", de);
 
 	// Prints free RAM (include cache ram, as it cannot be removed)
 	//printf ("	RAM: \t\t%5.1f MB\n", used_mb);
